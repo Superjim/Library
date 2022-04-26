@@ -56,6 +56,11 @@ function addBookToLibrary() {
   }
 }
 
+//simple toggle function for boolean is read / is not read
+function toggleRead(book) {
+  book.read = !book.read;
+}
+
 //delete book object via title property: string input
 function deleteBook(title) {
   this.title = title;
@@ -65,6 +70,7 @@ function deleteBook(title) {
 
 //search for book
 // TODO: search for book + author, two titles could be the same
+//probably re-write this just to return the array position?
 function searchForBook(title) {
   this.title = title;
   book = library.find(
@@ -87,11 +93,17 @@ function renderBook(book) {
   const bookBackground = document.createElement("div");
   bookBackground.id = "book-render";
   //Get book Information
-  const title = document.createTextNode(book.title);
-  const author = document.createTextNode(book.author);
-  const numberOfPages = document.createTextNode(book.numberOfPages);
-  const currentPage = document.createTextNode(book.currentPage);
-  // const read = document.createTextNode(book.read.toString());
+  const title = document.createTextNode("Title: " + book.title);
+  const author = document.createTextNode("Author: " + book.author);
+  const numberOfPages = document.createTextNode(book.numberOfPages + " pages.");
+  const currentPage = document.createTextNode(
+    "Current page: " + book.currentPage
+  );
+  const readButton = document.createElement("button");
+  readButton.id = "readButton";
+  const deleteButton = document.createElement("button");
+  deleteButton.id = "deleteButton";
+
   //Set book info to DOM
   bookBackground.appendChild(title);
   bookBackground.appendChild(document.createElement("br"));
@@ -101,7 +113,19 @@ function renderBook(book) {
   bookBackground.appendChild(document.createElement("br"));
   bookBackground.appendChild(currentPage);
   bookBackground.appendChild(document.createElement("br"));
-  // bookBackground.appendChild(read);
+  bookBackground.appendChild(readButton);
+  bookBackground.appendChild(document.createElement("br"));
+  bookBackground.appendChild(deleteButton);
+
+  //"event listeners" scope broken
+  //readButton.onclick = toggleRead;
+  //deleteBook.onclick = deleteBook(title);
+
+  if (book.read) {
+    readButton.classList.add("greenRead");
+  } else {
+    readButton.classList.add("redRead");
+  }
 
   //Find insertion point div in book container and add book
   document.getElementById("bookContainer").appendChild(bookBackground);
@@ -124,6 +148,13 @@ function clearRender() {
     clearRender();
     console.count(" render deleted");
   }
+}
+
+//render is read button
+if (book.read) {
+  readButton.classList.add("greenRead");
+} else {
+  readButton.classList.add("redRead");
 }
 
 /*

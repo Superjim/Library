@@ -18,6 +18,11 @@
 }
 
 .book-container > * {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   background-color: beige;
   border: 3px solid brown;
   padding: 1rem;
@@ -34,4 +39,19 @@
 
 #bookInfoForm {
   background-color: aliceblue;
+}
+
+.greenRead::after {
+  content: "Read";
+  color: green;
+}
+
+.redRead::after {
+  content: "Unread";
+  color: red;
+}
+
+#deleteButton::after {
+  content: "Delete Book";
+  padding: 1rem;
 }
