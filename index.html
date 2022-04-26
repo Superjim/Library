@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="library.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/a225139142.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Library</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-container">
+        <h1>
+          <i class="fa-solid fa-book-open"></i> Library
+          <i class="fa-solid fa-book"></i>
+        </h1>
+      </div>
+    </header>
+    <main class="content">
+      <div id="add-book-popup">
+        <h2>Add Book</h2>
+        <div class="close-window">X</div>
+        <form id="bookInfoForm" action="">
+          <div id="textInput">
+            <p>
+              <input
+                required
+                type="text"
+                id="bookTitle"
+                name="title"
+                placeholder="Title"
+                autocomplete="off"
+              />
+            </p>
+            <p>
+              <input
+                type="text"
+                id="bookAuthor"
+                name="author"
+                placeholder="Author"
+                autocomplete="off"
+              />
+            </p>
+            <p>
+              <input
+                type="number"
+                id="numberOfPages"
+                name="pages"
+                placeholder="Number of Pages"
+                autocomplete="off"
+              />
+            </p>
+            <p>
+              <input
+                type="number"
+                id="currentPage"
+                name="pages"
+                placeholder="Current Page"
+                autocomplete="off"
+              />
+            </p>
+            <p>
+              Have you read it?
+              <input type="checkbox" id="isRead" />
+            </p>
+            <p><input type="submit" id="addBook" value="Add Book" /></p>
+          </div>
+        </form>
+        <button class="render" id="renderButton">Render Books</button>
+      </div>
+      <div class="book-container" id="bookContainer">
+        <!-- This is where books will be added -->
+      </div>
+    </main>
+    <footer class="footer">
+      <p>By <a href="https://github.com/Superjim">Jim Jenkinson</a></p>
+    </footer>
+  </body>
+</html>
