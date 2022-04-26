@@ -1,12 +1,23 @@
 //event listeners
-document.getElementById("bookInfoForm").onsubmit = addBookToLibrary;
-document.getElementById("renderButton").onclick = renderLibrary;
+document.getElementById("addBook").onclick = addBookToLibrary;
 
 //some consts
 const bookContainer = document.getElementById("bookContainer");
 
 //init array
 var library = [];
+
+//reset form
+//better than the recursive loop on
+function clearForm() {
+  const inputs = document.querySelectorAll(
+    "#bookTitle, #bookAuthor, #numberOfPages, #currentPage, #isRead"
+  );
+
+  inputs.forEach((input) => {
+    input.value = "";
+  });
+}
 
 //create a book
 class Book {
@@ -22,32 +33,38 @@ class Book {
     this.numberOfPages = numberOfPages;
     this.currentPage = currentPage;
     this.read = read;
+    console.log(this.title + " created");
   }
 }
 
+//Add book
 //this function pushes a book to the array
 function addBookToLibrary() {
   event.preventDefault();
   const title = document.getElementById("bookTitle").value;
-  const author = document.getElementById("bookAuthor").value;
-  const numberOfPages = document.getElementById("numberOfPages").value;
-  const currentPage = document.getElementById("currentPage").value;
-  const read = document.querySelector("#isRead").checked;
+  if (searchForBook(title) === true && title !== "") {
+    const author = document.getElementById("bookAuthor").value;
+    const numberOfPages = document.getElementById("numberOfPages").value;
+    const currentPage = document.getElementById("currentPage").value;
+    const read = document.querySelector("#isRead").checked;
 
-  newBook = new Book(title, author, numberOfPages, currentPage, read);
-  library.push(newBook);
-
-  console.log(newBook);
-  console.log(library);
+    newBook = new Book(title, author, numberOfPages, currentPage, read);
+    library.push(newBook);
+    console.log(title + " pushed to library");
+    clearForm();
+    renderLibrary();
+  }
 }
 
 //delete book object via title property: string input
 function deleteBook(title) {
   this.title = title;
   this.library = this.library.filter((book) => book.title !== title);
+  console.log(book.title + " deleted");
 }
 
 //search for book
+// TODO: search for book + author, two titles could be the same
 function searchForBook(title) {
   this.title = title;
   book = library.find(
@@ -55,9 +72,12 @@ function searchForBook(title) {
   );
   if (book) {
     console.log(book);
-    return library.indexOf(book);
+    clearForm();
+    console.log(book.title + " found");
+    return false;
   } else {
     console.log("Book not found");
+    return true;
   }
 }
 
@@ -85,24 +105,25 @@ function renderBook(book) {
 
   //Find insertion point div in book container and add book
   document.getElementById("bookContainer").appendChild(bookBackground);
+  console.log(book.title + " rendered");
 }
 
 //render library
-
-//clears any existing DOMs
+//calls clearRender to remove old DOMs
 //calls renderBook command for each book object in library
 function renderLibrary() {
+  clearRender();
   library.forEach((element) => renderBook(element));
 }
 
-//remove renders
-function clearLastRender() {
+//remove renders via a recursive loop
+function clearRender() {
   var bookRender = document.getElementById("book-render");
-  bookRender.remove();
-}
-
-function clearAllRender() {
-  library.forEach((element) => clearLastRender());
+  if (bookRender) {
+    bookRender.parentNode.removeChild(bookRender);
+    clearRender();
+    console.count(" render deleted");
+  }
 }
 
 /*
