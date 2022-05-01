@@ -53,19 +53,8 @@ function addBookToLibrary() {
     console.log(title + " pushed to library");
     clearForm();
     renderLibrary();
+    saveData();
   }
-}
-
-//simple toggle function for boolean is read / is not read
-function toggleRead(book) {
-  book.read = !book.read;
-}
-
-//delete book object via title property: string input
-function deleteBook(title) {
-  this.title = title;
-  this.library = this.library.filter((book) => book.title !== title);
-  console.log(book.title + " deleted");
 }
 
 //search for book
@@ -87,6 +76,11 @@ function searchForBook(title) {
   }
 }
 
+//simple toggle function for boolean is read / is not read
+function toggleRead(book) {
+  book.read = !book.read;
+}
+
 //render book element
 function renderBook(book) {
   //Create new DOM for book
@@ -99,9 +93,9 @@ function renderBook(book) {
   const currentPage = document.createTextNode(
     "Current page: " + book.currentPage
   );
-  const readButton = document.createElement("button");
+  let readButton = document.createElement("button");
   readButton.id = "readButton";
-  const deleteButton = document.createElement("button");
+  let deleteButton = document.createElement("button");
   deleteButton.id = "deleteButton";
 
   //Set book info to DOM
@@ -117,17 +111,28 @@ function renderBook(book) {
   bookBackground.appendChild(document.createElement("br"));
   bookBackground.appendChild(deleteButton);
 
-  //"event listeners" scope broken
-  //readButton.onclick = toggleRead;
-  //deleteBook.onclick = deleteBook(title);
-
+  //render is read button
   if (book.read) {
     readButton.classList.add("greenRead");
   } else {
     readButton.classList.add("redRead");
   }
 
-  //Find insertion point div in book container and add book
+  //DELETE function
+  deleteButton.addEventListener("click", () => {
+    library.splice(library.indexOf(book), 1);
+    renderLibrary();
+    saveData();
+  });
+
+  //TOGGLE read function
+  readButton.addEventListener("click", () => {
+    book.read = !book.read;
+    renderLibrary();
+    saveData();
+  });
+
+  //Find insertion point div in book container html and add book
   document.getElementById("bookContainer").appendChild(bookBackground);
   console.log(book.title + " rendered");
 }
@@ -150,12 +155,24 @@ function clearRender() {
   }
 }
 
-//render is read button
-if (book.read) {
-  readButton.classList.add("greenRead");
-} else {
-  readButton.classList.add("redRead");
+//save local data function
+function saveData() {
+  localStorage.setItem(`library`, JSON.stringify(library));
 }
+
+//pulls library from local data
+function loadLibrary() {
+  if (!localStorage.library) {
+    renderLibrary();
+  } else {
+    let books = localStorage.getItem("library");
+    books = JSON.parse(books);
+    library = books;
+    renderLibrary();
+  }
+}
+
+loadLibrary();
 
 /*
 //testing
@@ -166,5 +183,13 @@ var book3 = new Book("Book3", "Sven", 500, 0);
 library.push(book1);
 library.push(book2);
 library.push(book3);
+
+
+//delete book object via title property: string input (unused)
+function deleteBook(title) {
+  this.title = title;
+  this.library = this.library.filter((book) => book.title !== title);
+  console.log(book.title + " deleted");
+}
 
 */
