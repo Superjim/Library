@@ -1,4 +1,4 @@
-# library
+# Library
 Library project built with HTML, CSS and Javascript.
 
 :point_right:[Live Demo](https://superjim.github.io/library/)
