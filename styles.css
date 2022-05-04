@@ -6,7 +6,24 @@
   padding: 1rem;
 }
 
-.content {
+#add-book {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+#textInput {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.book-container {
   background-color: bisque;
 }
 
@@ -34,7 +51,6 @@
   text-align: center;
   left: 0;
   bottom: 0;
-  background-color: aquamarine;
 }
 
 #bookInfoForm {
