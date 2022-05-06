@@ -1,7 +1,7 @@
 # Library
 Library project built with HTML, CSS and Javascript.
 
-:point_right:[Live Demo](https://superjim.github.io/library/)
+:point_right:[Live Demo](https://superjim.github.io/Library/)
 
 Takes objects storerd in an array and displays them via DOM manipulation using Javascript.
 
